@@ -1,6 +1,7 @@
-FROM openjdk:11
+FROM openjdk:11 AS base
 WORKDIR /opt/hello-gradle
 COPY ./ ./
 RUN ./gradlew assemble
-RUN rm -rf /root/.gradlew
-CMD java -jar build/libs/hello-spring.0.01-SNAPHOT.jar
+FROM amazoncorretto:11
+COPY --from=base /opt/hello-gradle/build/libs/hello-spring.0.0.1-SNAPSHOT.jar ./
+CMD java -jar build/libs/hello-spring.0.0.1-SNAPSHOT.jar
