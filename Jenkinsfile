@@ -1,5 +1,5 @@
-import org.jenkinsci.plugins.workflow.Library
-@Library("jenkins.pipeline.library@master") jpac
+*/import org.jenkinsci.plugins.workflow.Library*/
+*/@Library("jenkins.pipeline.library@master") jpac*/
 pipeline {
     agent any
     options {
