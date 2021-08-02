@@ -1,17 +1,22 @@
-/*import org.jenkinsci.plugins.workflow.Library*/
-/*@Library("jenkins.pipeline.library@master") jpac*/
 pipeline {
     agent any
     options {
         ansiColor('xterm')
     }
     stages {
-        stage('Test') {
+
+        stage('Test'){
             steps {
-                echo 'Testing..'
-                sh './gradle testing'
-                junit 'build/test-result/test/TEST-*.xml'
-           }
+                echo 'Testing...'
+                withGradle {
+                    sh './gradlew clean test'
+                }
+            }    
+            post{
+                always{
+                    junit 'build/test/results/test/TEST-*.xml'
+                }
+            }   
         }
         stage('Build') {
             steps {
