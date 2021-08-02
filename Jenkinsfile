@@ -6,6 +6,13 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh './gradle testing'
+                junit 'build/test-result/test/TEST-*.xml'
+           }
+        }
         stage('Build') {
             steps {
 
