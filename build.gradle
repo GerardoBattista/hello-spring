@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'groovy'
+    id 'jacoco'
 }
 
 group = 'com.example'
@@ -15,9 +16,19 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.codehaus.groovy:groovy'
+    testImplementation 'org.assertj:assertj-core:3.20.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // testImplementation 'org.hamcrest:hamcrest:2.2'
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = true
+    }
 }
