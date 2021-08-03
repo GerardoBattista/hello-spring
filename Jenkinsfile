@@ -25,7 +25,7 @@ pipeline {
                 post {
                   always {
                     recorderIssues (
-                            tools; [
+                            tools: [
                                 pmdParser(pattern: 'build/reports/pmd/*.xml')
                             ]
                     )
