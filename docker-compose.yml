@@ -2,7 +2,7 @@ version: "3.0"
 services:
   hellosring:
     #image: alpine-jdk
-    image: hellospring:latest
+    image: hello-spring:latest
     build: .
     ports:
       - "8081:8081"
