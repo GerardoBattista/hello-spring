@@ -27,6 +27,7 @@ pipeline {
                     recordIssues(
                             tools:[
                                 pmdParser(pattern: 'build/reports/pmd/*.xml')
+                                spotBugs(pattern: 'build/reports/spotbugs/*.xml' )
                             ]
                     )
                 }    
@@ -36,16 +37,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                  buildscript {
-                    repositories{
-                        maven {
-                        url "https://plugins.gradle.org/m2/"
-                        }
-                    }
-                    dependencies {
-                    classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.7.2"  
-                    }
-                }
+
             }
         }
         stage('Deploy') {
