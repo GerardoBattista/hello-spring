@@ -1,22 +1,20 @@
 pipeline {
     agent any
-    options {
-        ansiColor('xterm')
-    }
-    stages {
 
-        stage('Test'){
+    stages {
+        stage('Test') {
             steps {
                 echo 'Testing...'
                 withGradle {
                     sh './gradlew clean test'
                 }
-            }    
-            post{
-                always{
-                    junit 'build/test/results/test/TEST-*.xml'
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/TEST-*.xml'
+                    jacoco execPattern:'build/jacoco/*.exec'
                 }
-            }   
+            }
         }
         stage('Build') {
             steps {
