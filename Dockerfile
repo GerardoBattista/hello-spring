@@ -1,8 +1,11 @@
-##Amazoncorretto con Alpine y JDK ##
-## Imagen reducida ##
-#Utilizar la menor cantidad de layers posibles.#
-#Reducir espacio eliminando archivos temporales o cosas que no son necesarias en el contenedor.#
-#Optimizar el archivo “.dockerignore”, indicando que ficheros temporales y logs, deben ignorarse.#
+# Build stage
+FROM openjdk:11 AS base
+WORKDIR /opt/hello-gradle
+COPY ./ ./
+RUN ./gradlew assemble
+
+# Runtime stage
 FROM amazoncorretto:11
-           COPY build/libs/demo-0.0.1-SNAPSHOT.jar ./
-           CMD java -jar demo-0.0.1-SNAPSHOT.jar
+WORKDIR /opt/hello-gradle
+COPY --from=base /opt/hello-gradle/build/libs/demo-0.0.1-SNAPSHOT.jar ./
+CMD java -jar demo-0.0.1-SNAPSHOT.jar
