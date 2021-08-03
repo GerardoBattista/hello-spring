@@ -5,8 +5,15 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                sh './gradle testing'
-                junit 'build/test-result/test/TEST-*.xml'
+                withGradle {
+                    sh './gradlew clean test'
+                }
+            }
+            post {
+                always {
+                    junit 'build/test-results/test/TEST-*.xml'
+                    jacoco execPattern:'build/jacoco/*.exec'
+                }
             }
         }
         stage('Build') {
