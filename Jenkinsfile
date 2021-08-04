@@ -3,8 +3,7 @@ pipeline {
     options {
         ansiColor('xterm')
         }
-
-    stages {
+    stage {
         stage('Test') {
             steps {
                 echo 'Testing...'
