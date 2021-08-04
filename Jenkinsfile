@@ -18,13 +18,13 @@ pipeline {
                     jacoco execPattern:'build/jacoco/*.exec'
                 }
             }
-        }
         stage('QA') {
             steps {
                 withGradle {
                     sh './gradlew check'
                 }
             }
+        }
             stage('SonarQube Analysis') {
               steps {
             withSonarQubeEnv('local') {
