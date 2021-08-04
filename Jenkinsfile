@@ -3,6 +3,7 @@ pipeline {
     options {
         ansiColor('xterm')
         }
+
     stages {
         stage('Test') {
             steps {
@@ -17,19 +18,12 @@ pipeline {
                     jacoco execPattern:'build/jacoco/*.exec'
                 }
             }
+        }
         stage('QA') {
             steps {
                 withGradle {
                     sh './gradlew check'
                 }
-            }
-        }
-            stage('SonarQube Analysis') {
-              steps {
-            withSonarQubeEnv('local') {
-            sh "./gradlew sonarqube"
-                 }
-               }
             }
             post {
                 always {
@@ -42,7 +36,13 @@ pipeline {
                 }
             }
         }
-
+            stage('SonarQube Analysis') {
+              steps {
+            withSonarQubeEnv('local') {
+            sh "./gradlew sonarqube"
+                 }
+               }
+            }
         stage('Build') {
             steps {
                echo 'Ejecutando build de Docker'
