@@ -36,6 +36,15 @@ pipeline {
                 }
             }
         }
+/*
+            stage('SonarQube Analysis') {
+              steps {
+            withSonarQubeEnv('local') {
+            sh "./gradlew sonarqube"
+                 }
+               }
+            }
+*/
         stage('Build') {
             steps {
                echo 'Ejecutando build de Docker'
@@ -47,6 +56,7 @@ pipeline {
             steps {
                 echo 'Security analysis...'
                 sh 'trivy image --format=json --output=trivy-image.json hello-gradle:latest'
+
             }
             post {
                 always {
@@ -67,6 +77,7 @@ pipeline {
               }
            }
         }
+
         stage('Deploy') {
             steps {
             echo 'Deploying'
