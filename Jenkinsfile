@@ -72,7 +72,7 @@ pipeline {
         stage('Publish') {
             steps {
             tag 'docker tag 10.50.14.1:5050/gerardod/hello-spring/hello-gradle:latest 10.250.14.1:5050/gerardod/hello-spring/hello-gradle:latest-1.0.${BUILD_NUMBER}'
-            withDockerRegistry([url:'http://10.250.14.1:5050', credentialsID:'dockerCli' ]) {
+            withDockerRegistry([url:'http://10.250.14.1:5050', credentialsId:'dockerCLI' ]) {
                 sh 'docker push 10.250.14.1:5050/gerardod/hello-gradle:latest'
                 sh 'docker push 10.250.14.1:5050/gerardod/hello-gradle:TESTING-1.0.${BUILD_NUMBER}'
               }
