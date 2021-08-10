@@ -3,7 +3,6 @@ pipeline {
     options {
         ansiColor('xterm')
         }
-
     stages {
         stage('Test') {
             steps {
@@ -64,10 +63,9 @@ pipeline {
                         enabledForFailure: true,
                         aggregatingResults: true,
                         tool: trivy(pattern: 'trivy-*.json')
-                    )
+                   } 
                 }
             }
-        }
         
         stage('Publish') {
             steps {
@@ -80,9 +78,20 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-            echo 'Deploying'
-
+               echo 'Deplegando servicio...'
+               sshagent(credentials:['appkey']){
+                   sh '''
+                   ssh -o StrictHostKeyChecking=no app app@10.250.14.1 'cd hello-spring && docker-compose pull && docker-compose up -d'
+                   '''
+                }
+            }
+        }
+        stage('gitlab'){
+            steps{
+                echo {
+                updateGitlabCommitStatus name: 'build', state: 'pending'
+                updateGitlabCommitStatus name: 'build', state: 'success'
+                }
             }
         }
     }
-}
