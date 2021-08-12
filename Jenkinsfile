@@ -63,11 +63,12 @@ pipeline {
                         enabledForFailure: true,
                         aggregatingResults: true,
                         tool: trivy(pattern: 'trivy-*.json')
+                                 )
                    } 
                 }
-            }
-        
-        stage('Publish') {
+            } 
+/*
+       stage('Publish') {
             steps {
             tag 'docker tag hello-gradle:latest 10.250.14.1:5050/gerardod/hello-gradle:latest-1.0.${BUILD_NUMBER}'
             withDockerRegistry([url:'http://10.250.14.1:5050', credentialsId:'Docker-gitlab' ]) {
@@ -76,6 +77,7 @@ pipeline {
               }
            }
         }
+*/
         stage('Deploy') {
             steps {
                echo 'Deplegando servicio...'
@@ -86,12 +88,5 @@ pipeline {
                 }
             }
         }
-        stage('gitlab'){
-            steps{
-                echo {
-                updateGitlabCommitStatus name: 'build', state: 'pending'
-                updateGitlabCommitStatus name: 'build', state: 'success'
-                }
-            }
-        }
     }
+}
