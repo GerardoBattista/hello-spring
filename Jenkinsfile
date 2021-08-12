@@ -67,7 +67,6 @@ pipeline {
                    } 
                 }
             } 
-/*
        stage('Publish') {
             steps {
             tag 'docker tag hello-gradle:latest 10.250.14.1:5050/gerardod/hello-gradle:latest-1.0.${BUILD_NUMBER}'
@@ -77,7 +76,6 @@ pipeline {
               }
            }
         }
-*/
         stage('Deploy') {
             steps {
                echo 'Deplegando servicio...'
